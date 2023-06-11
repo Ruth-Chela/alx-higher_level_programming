@@ -1,6 +1,6 @@
 /*
  * File: 13-is_palindrome.c
- * Auth: Mbah Nkemdinma
+ * Auth: Ruth Towett
  */
 
 #include "lists.h"
@@ -16,7 +16,9 @@ int is_palindrome(listint_t **head);
  */
 listint_t *reverse_listint(listint_t **head)
 {
-	listint_t *node = *head, *next, *prev = NULLwhile (node)
+	listint_t *node = *head, *next, *prev = NULL;
+
+	while (node)
 	{
 		next = node->next;
 		node->next = prev;
@@ -73,4 +75,4 @@ int is_palindrome(listint_t **head)
 
 	return (1);
 }
-;
+
