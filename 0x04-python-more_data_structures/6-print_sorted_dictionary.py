@@ -1,6 +1,11 @@
 #!/usr/bin/python3
+
 def print_sorted_dictionary(a_dictionary):
-    list_ord = list(a_dictionary.keys())
-    list_ord.sort()
-    for i in list_ord:
-        print("{}: {}".format(i, a_dictionary.get(i))
+    keys = sorted(a_dictionary.keys())
+    for y in keys:
+        value = a_dictionary[y]
+        if isinstance(value, dict):
+            print(y + ":")
+            print_sorted_dictionary(value)
+        else:
+            print(y + ": " + str(value))
