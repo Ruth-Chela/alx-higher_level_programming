@@ -1,16 +1,46 @@
-#!/usr/bin/python3
-"""function that appendds text to each line"""
+#!/usr/bin/env python3
+"""Script that reads stdin line by line and computes metrics"""
 
+import sys
 
-def append_after(filename="", search_string="", new_string=""):
-    """function that appendds text to each line"""
-    app_msg = ""
-    with open(filename, 'r') as f:
-        elem_line = f.readline()
-        while elem_line != "":
-            app_msg += elem_line
-            if search_string in elem_line:
-                app_msg += new_string
-            elem_line = f.readline()
-    with open(filename, 'w') as f:
-        f.write(app_msg)
+metrics = {
+    '200': 0,
+    '301': 0,
+    '400': 0,
+    '401': 0,
+    '403': 0,
+    '404': 0,
+    '405': 0,
+    '500': 0
+}
+
+total_size = 0
+counter = 0
+
+try:
+    for line in sys.stdin:
+        counter += 1
+        data = line.split()
+
+        if len(data) > 2:
+            status_code = data[-2]
+            file_size = int(data[-1])
+            total_size += file_size
+
+            if status_code in metrics:
+                metrics[status_code] += 1
+
+        if counter % 10 == 0:
+            print("File size: {}".format(total_size))
+            for key in sorted(metrics.keys()):
+                if metrics[key] > 0:
+                    print("{}: {}".format(key, metrics[key]))
+
+except KeyboardInterrupt:
+    pass
+
+finally:
+    print("File size: {}".format(total_size))
+    for key in sorted(metrics.keys()):
+        if metrics[key] > 0:
+            print("{}: {}".format(key, metrics[key]))
